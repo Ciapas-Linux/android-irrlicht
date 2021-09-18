@@ -1,0 +1,58 @@
+
+plugins {
+    id 'com.android.application'
+}
+
+
+
+// you can hange these properties to suit you needs:
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.example.irrlicht"
+        minSdk 24
+        targetSdk 31
+        android.ndkVersion "23.0.7599858"
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+                cppFlags ''
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    externalNativeBuild {
+        cmake {
+            path file('src/main/cpp/CMakeLists.txt')
+            version '3.10.2'
+        }
+    }
+}
+
+dependencies {
+
+
+}
+
+copy {
+    // change irrlicht-ogles path to you needs this
+    // copy media folder from irrlicht to you assets folder
+    // i use env HOME: ${System.env.HOME}
+    from "${System.env.HOME}/irrlicht-ogles"
+    into "src/main/assets"
+    include 'media/**'
+}
